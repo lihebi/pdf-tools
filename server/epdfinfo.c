@@ -496,19 +496,82 @@ image_render_page(PopplerDocument *pdf, PopplerPage *page,
     }
 
 
+
+  double avalue=0.3;
   // add horizontal helper lines
-  cairo_set_source_rgba(cr, 0.5, 0, 0, 0.5);
+  cairo_set_source_rgba(cr, 0.5, 0, 0, avalue);
   cairo_move_to(cr, 0, pt_height*1.0/4);
   cairo_line_to(cr, pt_width, pt_height*1.0/4);
   cairo_stroke(cr);
-  cairo_set_source_rgba(cr, 0, 0.5, 0, 0.5);
+  cairo_set_source_rgba(cr, 0, 0.5, 0, avalue);
   cairo_move_to(cr, 0, pt_height*2.0/4);
   cairo_line_to(cr, pt_width, pt_height*2.0/4);
   cairo_stroke(cr);
-  cairo_set_source_rgba(cr, 0, 0, 0.5, 0.5);
+  cairo_set_source_rgba(cr, 0, 0, 0.5, avalue);
   cairo_move_to(cr, 0, pt_height*3.0/4);
   cairo_line_to(cr, pt_width, pt_height*3.0/4);
   cairo_stroke(cr);
+
+  // add vertical helper lines
+  /* cairo_set_source_rgba(cr, 0.5, 0, 0, 0.5); */
+  /* cairo_move_to(cr, pt_width*1.0/4, 0); */
+  /* cairo_line_to(cr, pt_width*1.0/4, pt_height*3.0/8); */
+  /* cairo_stroke(cr); */
+  /* cairo_set_source_rgba(cr, 0, 0.5, 0, 0.5); */
+  /* cairo_move_to(cr, pt_width*1.0/4, pt_height*3.0/8); */
+  /* cairo_line_to(cr, pt_width*1.0/4, pt_height*5.0/8); */
+  /* cairo_stroke(cr); */
+  /* cairo_set_source_rgba(cr, 0, 0, 0.5, 0.5); */
+  /* cairo_move_to(cr, pt_width*1.0/4, pt_height*5.0/8); */
+  /* cairo_line_to(cr, pt_width*1.0/4, pt_height); */
+  /* cairo_stroke(cr); */
+
+  cairo_pattern_t *pat;
+  // top to R
+  pat = cairo_pattern_create_linear (0, 0, 0, pt_height*1.0/4);
+  cairo_pattern_add_color_stop_rgba (pat, 0, 0.5, 0.5, 0.5, avalue);
+  cairo_pattern_add_color_stop_rgba (pat, 1, 0.5, 0, 0, avalue);
+  
+  cairo_set_source (cr, pat);
+  cairo_move_to(cr, pt_width*2.0/4, 0);
+  cairo_line_to(cr, pt_width*2.0/4, pt_height*1.0/4);
+  cairo_stroke(cr);
+  cairo_pattern_destroy (pat);
+
+  // R to G
+  pat = cairo_pattern_create_linear (0, pt_height*1.0/4, 0, pt_height*2.0/4);
+  cairo_pattern_add_color_stop_rgba (pat, 0, 0.5, 0, 0, avalue);
+  cairo_pattern_add_color_stop_rgba (pat, 1, 0, 0.5, 0, avalue);
+
+  cairo_set_source (cr, pat);
+  cairo_move_to(cr, pt_width*2.0/4, pt_height*1.0/4);
+  cairo_line_to(cr, pt_width*2.0/4, pt_height*2.0/4);
+  cairo_stroke(cr);
+  cairo_pattern_destroy (pat);
+
+
+  // G to B
+  pat = cairo_pattern_create_linear (0, pt_height*2.0/4, 0, pt_height*3.0/4);
+  cairo_pattern_add_color_stop_rgba (pat, 0, 0, 0.5, 0, avalue);
+  cairo_pattern_add_color_stop_rgba (pat, 1, 0, 0, 0.5, avalue);
+  
+  cairo_set_source (cr, pat);
+  cairo_move_to(cr, pt_width*2.0/4, pt_height*2.0/4);
+  cairo_line_to(cr, pt_width*2.0/4, pt_height*3.0/4);
+  cairo_stroke(cr);
+  cairo_pattern_destroy (pat);
+
+  // G to bot
+  pat = cairo_pattern_create_linear (0, pt_height*3.0/4, 0, pt_height*4.0/4);
+  cairo_pattern_add_color_stop_rgba (pat, 0, 0, 0, 0.5, avalue);
+  cairo_pattern_add_color_stop_rgba (pat, 1, 0.5, 0.5, 0.5, avalue);
+  
+  cairo_set_source (cr, pat);
+  cairo_move_to(cr, pt_width*2.0/4, pt_height*3.0/4);
+  cairo_line_to(cr, pt_width*2.0/4, pt_height*4.0/4);
+  cairo_stroke(cr);
+  cairo_pattern_destroy (pat);
+  
   
   /* This makes the colors look right. */
   cairo_set_operator (cr, CAIRO_OPERATOR_DEST_OVER);
