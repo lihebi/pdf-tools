@@ -495,6 +495,21 @@ image_render_page(PopplerDocument *pdf, PopplerPage *page,
       goto error;
     }
 
+
+  // add horizontal helper lines
+  cairo_set_source_rgba(cr, 0.5, 0, 0, 0.5);
+  cairo_move_to(cr, 0, pt_height*1.0/4);
+  cairo_line_to(cr, pt_width, pt_height*1.0/4);
+  cairo_stroke(cr);
+  cairo_set_source_rgba(cr, 0, 0.5, 0, 0.5);
+  cairo_move_to(cr, 0, pt_height*2.0/4);
+  cairo_line_to(cr, pt_width, pt_height*2.0/4);
+  cairo_stroke(cr);
+  cairo_set_source_rgba(cr, 0, 0, 0.5, 0.5);
+  cairo_move_to(cr, 0, pt_height*3.0/4);
+  cairo_line_to(cr, pt_width, pt_height*3.0/4);
+  cairo_stroke(cr);
+  
   /* This makes the colors look right. */
   cairo_set_operator (cr, CAIRO_OPERATOR_DEST_OVER);
   cairo_set_source_rgb (cr, 1., 1., 1.);
